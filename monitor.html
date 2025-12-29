@@ -16,7 +16,7 @@
 
     <script>
         // CHANGE THIS TO YOUR CURRENT NGROK URL
-        const socket = new WebSocket('wss://09c6f5fc9df2.ngrok-free.app');
+        const socket = new WebSocket('wss://gateway.ai.cloudflare.com/v1/1ea4717f7ea54b17bf515ee03af0553b/b/openai');
 
         socket.onopen = () => {
             document.getElementById('logs').innerHTML = '<p style="color:#0f0">Connected! Waiting for typing...</p>';
